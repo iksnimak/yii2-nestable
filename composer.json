@@ -15,5 +15,8 @@
         "psr-4": {
             "iksnimak\\": ""
         }
-    }
+    },
+	"require": {
+		"kartik-v/yii2-widgets": "*"
+	}
 }
