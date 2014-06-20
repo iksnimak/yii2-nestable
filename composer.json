@@ -1,0 +1,19 @@
+{
+    "name": "iksnimak/yii2-nestable",
+    "description": "Implementation of nestable lists using jquery.nestable plugin for Yii 2.0.",
+    "keywords": ["yii2", "extension", "widget", "nestable", "jquery"],
+    "homepage": "https://github.com/iksnimak/yii2-nestable",
+    "type": "yii2-extension",
+    "license": "BSD 3-Clause",
+    "authors": [
+        {
+            "name": "Karol Kaminski",
+            "email": "kkaminski1981@gmail.com
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "iksnimak\\": ""
+        }
+    }
+}
