@@ -3,16 +3,16 @@
 /**
  * @copyright Copyright &copy; Arno Slatius 2015
  * @package yii2-nestable
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 namespace slatiusa\nestable;
 
 /**
- * Nestable bundle for \iksnimak\sortable\Sortable
+ * Nestable bundle for \slatiusa\nestable\Sortable
  *
- * @author Karol Kaminski <kkaminski1981@gmail.com>
- * @since 1.0
+ * @author Arno Slatius <a.slatius@gmail.com>
+ * @since 1.1
  */
 class NestableAsset extends \kartik\base\AssetBundle {
 

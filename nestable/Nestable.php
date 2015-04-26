@@ -3,7 +3,7 @@
 /**
  * @copyright Copyright &copy; Arno Slatius 2015
  * @package yii2-nestable
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 namespace slatiusa\nestable;
@@ -16,8 +16,8 @@ use yii\helpers\ArrayHelper;
  * Based on jquery.nestable.js plugin.
  *
  * @see http://dbushell.github.io/Nestable/
- * @author Karol Kaminski <kkaminski1981@gmail.com>
- * @since 1.0
+ * @author Arno Slatius <a.slatius@gmail.com>
+ * @since 1.1
  */
 class Nestable extends \kartik\base\Widget {
 
