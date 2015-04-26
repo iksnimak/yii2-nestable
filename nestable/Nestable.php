@@ -1,12 +1,12 @@
 <?php
 
 /**
- * @copyright Copyright &copy; Karol Kaminski, 2014
+ * @copyright Copyright &copy; Arno Slatius 2015
  * @package yii2-nestable
  * @version 1.0.0
  */
 
-namespace iksnimak\nestable;
+namespace slatiusa\nestable;
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -19,7 +19,7 @@ use yii\helpers\ArrayHelper;
  * @author Karol Kaminski <kkaminski1981@gmail.com>
  * @since 1.0
  */
-class Nestable extends \kartik\widgets\Widget {
+class Nestable extends \kartik\base\Widget {
 
 	// TODO: Implement default nestable list without handle
 	const TYPE_LIST = 'list';

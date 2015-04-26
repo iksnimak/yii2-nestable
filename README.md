@@ -1,8 +1,7 @@
 yii2-nestable
 =============
 
-Yii2 implementation for jquery.nestable plugin
-
+Yii2 implementation for jquery.nestable plugin.
 Plugin sources homepage: http://dbushell.github.io/Nestable/
 
 ## Installation
@@ -12,13 +11,15 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-$ php composer.phar require iksnimak/yii2-nestable "dev-master"
+$ php composer.phar require slatiusa/yii2-nestable "dev-master"
 ```
 
 or add
 
 ```
-"iksnimak/yii2-nestable": "dev-master"
+"slatiusa/yii2-nestable": "dev-master"
 ```
 
 to the ```require``` section of your `composer.json` file.
+
+## Usage
