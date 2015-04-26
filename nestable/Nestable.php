@@ -52,6 +52,7 @@ class Nestable extends \kartik\base\Widget {
 	/**
 	 * @var array the sortable items configuration for rendering elements within the sortable
 	 * list / grid. You can set the following properties:
+     * - id: integer, the id of the item. This will get returned on change
 	 * - content: string, the list item content (this is not HTML encoded)
 	 * - disabled: bool, whether the list item is disabled
      * - options: array, the HTML attributes for the list item.
@@ -94,12 +95,17 @@ class Nestable extends \kartik\base\Widget {
 	protected function renderItems($_items = NULL) {
 		$_items = is_null($_items) ? $this->items : $_items;
 		$items = '';
+        $dataid = 0;
 		foreach ($_items as $item) {
 			$options = ArrayHelper::getValue($item, 'options', ['class' => 'dd-item dd3-item']);
-			$options = ArrayHelper::merge($this->itemOptions, $options);
-			$content = $this->handleLabel;
+            $options = ArrayHelper::merge($this->itemOptions, $options);
+            $dataId  = ArrayHelper::getValue($item, 'id', $dataid++);
+            $options = ArrayHelper::merge($options, ['data-id' => $dataId]);
+
             $contentOptions = ArrayHelper::getValue($item, 'contentOptions', ['class' => 'dd3-content']);
+			$content = $this->handleLabel;
 			$content .= Html::tag('div', ArrayHelper::getValue($item, 'content', ''), $contentOptions);
+
 			$children = ArrayHelper::getValue($item, 'children', []);
 			if (!empty($children)) {
 					// recursive rendering children items
