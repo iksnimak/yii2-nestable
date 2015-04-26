@@ -54,7 +54,8 @@ class Nestable extends \kartik\base\Widget {
 	 * list / grid. You can set the following properties:
 	 * - content: string, the list item content (this is not HTML encoded)
 	 * - disabled: bool, whether the list item is disabled
-	 * - options: array, the HTML attributes for the list item.
+     * - options: array, the HTML attributes for the list item.
+	 * - contentOptions: array, the HTML attributes for the content
 	 */
 	public $items = [];
 
@@ -94,10 +95,11 @@ class Nestable extends \kartik\base\Widget {
 		$_items = is_null($_items) ? $this->items : $_items;
 		$items = '';
 		foreach ($_items as $item) {
-			$options = ArrayHelper::getValue($item, 'options', []);
+			$options = ArrayHelper::getValue($item, 'options', ['class' => 'dd-item dd3-item']);
 			$options = ArrayHelper::merge($this->itemOptions, $options);
 			$content = $this->handleLabel;
-			$content .= ArrayHelper::getValue($item, 'content', '');
+            $contentOptions = ArrayHelper::getValue($item, 'contentOptions', ['class' => 'dd3-content']);
+			$content .= Html::tag('div', ArrayHelper::getValue($item, 'content', ''), $contentOptions);
 			$children = ArrayHelper::getValue($item, 'children', []);
 			if (!empty($children)) {
 					// recursive rendering children items
