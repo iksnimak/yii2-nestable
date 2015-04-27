@@ -1,7 +1,9 @@
 yii2-nestable
 =============
 
-Yii2 implementation for jquery.nestable plugin. Plugin sources homepage: http://dbushell.github.io/Nestable/
+Yii2 implementation for jquery.nestable plugin that interfaces with the Nested Sets behavior for Yii 2.
+- jquery.nestable plugin: http://dbushell.github.io/Nestable/
+- Nested Sets Behavior for Yii 2: https://github.com/creocoder/yii2-nested-sets
 
 ## Installation
 
