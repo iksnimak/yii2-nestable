@@ -1,24 +1,25 @@
 <?php
 
 /**
- * @copyright Copyright &copy; Karol Kaminski, 2014
+ * @copyright Copyright &copy; Arno Slatius 2015
  * @package yii2-nestable
- * @version 1.0.0
+ * @version 2.0
  */
 
-namespace iksnimak\nestable;
+namespace slatiusa\nestable;
 
 /**
- * Nestable bundle for \iksnimak\sortable\Sortable
+ * Nestable bundle for \slatiusa\nestable\Sortable
  *
- * @author Karol Kaminski <kkaminski1981@gmail.com>
- * @since 1.0
+ * @author Arno Slatius <a.slatius@gmail.com>
+ * @since 2.0
  */
-class NestableAsset extends \kartik\widgets\AssetBundle {
+class NestableAsset extends \kartik\base\AssetBundle {
 
 	public function init() {
 		$this->setSourcePath(__DIR__ . '/../assets');
-		$this->setupAssets('js', ['js/jquery.nestable']);
+        $this->setupAssets('js', ['js/jquery.nestable']);
+		$this->setupAssets('css', ['css/nestable']);
 		parent::init();
 	}
 

@@ -1,22 +1,23 @@
 {
-    "name": "iksnimak/yii2-nestable",
-    "description": "Implementation of nestable lists using jquery.nestable plugin for Yii 2.0.",
-    "keywords": ["yii2", "extension", "widget", "nestable", "jquery"],
-    "homepage": "https://github.com/iksnimak/yii2-nestable",
+    "name": "slatiusa/yii2-nestable",
+    "description": "Nestable lists using jquery.nestable plugin interfaced to the nested set behavior for Yii 2.0.",
+    "keywords": ["yii2", "extension", "widget", "nestable", "sortable", "nested set", "behavior", "jquery"],
+    "homepage": "https://github.com/Hommer101/yii2-nestable",
     "type": "yii2-extension",
     "license": "BSD 3-Clause",
     "authors": [
         {
-            "name": "Karol Kaminski",
-            "email": "kkaminski1981@gmail.com"
+            "name": "Arno Slatius",
+            "email": "a.slatius@gmail.com"
         }
     ],
+    "require": {
+        "kartik-v/yii2-krajee-base": "*",
+        "creocoder/yii2-nested-sets": ": "*"
+    },
     "autoload": {
         "psr-4": {
-            "iksnimak\\": ""
+            "slatiusa\\": ""
         }
-    },
-	"require": {
-		"kartik-v/yii2-widgets": "*"
-	}
+    }
 }
