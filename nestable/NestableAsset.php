@@ -3,7 +3,7 @@
 /**
  * @copyright Copyright &copy; Arno Slatius 2015
  * @package yii2-nestable
- * @version 1.1.0
+ * @version 2.0
  */
 
 namespace slatiusa\nestable;
@@ -12,7 +12,7 @@ namespace slatiusa\nestable;
  * Nestable bundle for \slatiusa\nestable\Sortable
  *
  * @author Arno Slatius <a.slatius@gmail.com>
- * @since 1.1
+ * @since 2.0
  */
 class NestableAsset extends \kartik\base\AssetBundle {
 

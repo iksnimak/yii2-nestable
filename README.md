@@ -1,8 +1,7 @@
 yii2-nestable
 =============
 
-Yii2 implementation for jquery.nestable plugin.
-Plugin sources homepage: http://dbushell.github.io/Nestable/
+Yii2 implementation for jquery.nestable plugin. Plugin sources homepage: http://dbushell.github.io/Nestable/
 
 ## Installation
 
@@ -24,11 +23,46 @@ to the ```require``` section of your `composer.json` file.
 
 ## Usage
 
+Be sure to add an action to your controller;
 ```
 use slatiusa\nestable\Nestable;
 
+class yourClass extends Controller
+{
+    public function actions() {
+        return [
+            'nodeMove' => [
+                'class' => 'slatiusa\nestable\NestableNodeMoveAction',
+                'modelName' => TreeModel::className(),
+            ],
+        ];
+    }
+
+```
+
+And then render the widget in your view;
+
+```
 echo Nestable::widget([
     'type' => Nestable::TYPE_WITH_HANDLE,
+    'query' => TreeModel::find()->where([ top of tree ]),
+    'modelOptions' => [
+        'name' => 'name'
+    ],
+    'pluginEvents' => [
+        'change' => 'function(e) {}',
+    ],
+    'pluginOptions' => [
+        'maxDepth' => 7,
+    ],
+]);
+
+```
+
+You can either supply an ActiveQuery object in `query` from which a tree will be built.
+You can also supply an item list;
+```
+    ...
     'items' => [
         ['content' => 'Item # 1', 'id' => 1],
         ['content' => 'Item # 2', 'id' => 2],
@@ -39,15 +73,10 @@ echo Nestable::widget([
             ['content' => 'Item # 4.3', 'id' => 7],
         ]],
     ],
-    'pluginEvents' => [
-        'change' => 'function(e) {
-            var list   = e.length ? e : $(e.target);
-            console.log( JSON.stringify( list.nestable("serialize") ) );
-        }',
-    ],
-    'pluginOptions' => [
-        'maxDepth' => 7,
-    ],
-]);
-
 ```
+
+The `modelOptions['name']` should hold an attribute name that will be used to name on the items in the list.
+You can alternatively supply an unnamed `function($model)` to build your own content string.
+
+Supply a `pluginEvents['change']` with some JavaScript code to catch the change event fired by jquery.nestable plugin.
+The `pluginOptions` accepts all the options for the original jquery.nestable plugin.

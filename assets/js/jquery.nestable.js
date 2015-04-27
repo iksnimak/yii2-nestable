@@ -1,5 +1,7 @@
 /*!
  * Nestable jQuery Plugin - Copyright (c) 2012 David Bushell - http://dbushell.com/
+ * Modified for yii2-nestable - Copyright (c) 2015 Arno Slatius - http://slatius.nl/
+ *
  * Dual-licensed under the BSD or MIT licenses
  */
 ;(function($, window, document, undefined)
@@ -47,7 +49,8 @@
             collapseBtnHTML : '<button data-action="collapse" type="button">Collapse</button>',
             group           : 0,
             maxDepth        : 5,
-            threshold       : 20
+            threshold       : 20,
+            url             : ''
         };
 
     function Plugin(element, options)
@@ -248,7 +251,8 @@
         {
             var mouse    = this.mouse,
                 target   = $(e.target),
-                dragItem = target.closest(this.options.itemNodeName);
+                dragItem = target.closest(this.options.itemNodeName),
+                node     = this.node;
 
             this.placeEl.css('height', dragItem.height());
 
@@ -286,13 +290,28 @@
 
         dragStop: function(e)
         {
-            // fix for zepto.js
-            //this.placeEl.replaceWith(this.dragEl.children(this.options.itemNodeName + ':first').detach());
             var el = this.dragEl.children(this.options.itemNodeName).first();
             el[0].parentNode.removeChild(el[0]);
             this.placeEl.replaceWith(el);
 
             this.dragEl.remove();
+
+            var prev = el.prev(this.options.itemNodeName);
+            var next = el.next(this.options.itemNodeName);
+            var parent = el.parents(this.options.itemNodeName);
+            $.ajax({
+                url: this.options.url,
+                context: document.body,
+                data: {
+                    id  : el.data('id'),
+                    par : $(parent).data('id'),
+                    lft : (prev.length ? prev.data('id') : 0),
+                    rgt : (next.length ? next.data('id') : 0),
+                }
+            }).fail(function(jqXHR){
+                alert(jqXHR.responseText);
+            });
+
             this.el.trigger('change');
             if (this.hasNewRoot) {
                 this.dragRootEl.trigger('change');

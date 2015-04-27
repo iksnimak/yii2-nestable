@@ -3,27 +3,26 @@
 /**
  * @copyright Copyright &copy; Arno Slatius 2015
  * @package yii2-nestable
- * @version 1.1.0
+ * @version 2.0
  */
 
 namespace slatiusa\nestable;
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use gilek\gtreetable\models\TreeModel;
 
 /**
  * Create nestable lists using drag & drop for Yii 2.0.
  * Based on jquery.nestable.js plugin.
  *
- * @see http://dbushell.github.io/Nestable/
  * @author Arno Slatius <a.slatius@gmail.com>
- * @since 1.1
+ * @since 2.0
  */
-class Nestable extends \kartik\base\Widget {
-
-	// TODO: Implement default nestable list without handle
+class Nestable extends \kartik\base\Widget
+{
 	const TYPE_LIST = 'list';
-
 	const TYPE_WITH_HANDLE = 'list-handle';
 
 	/**
@@ -57,17 +56,58 @@ class Nestable extends \kartik\base\Widget {
 	 * - disabled: bool, whether the list item is disabled
      * - options: array, the HTML attributes for the list item.
 	 * - contentOptions: array, the HTML attributes for the content
+     * - children: array, with item children
 	 */
 	public $items = [];
+
+    /**
+    * @var string the URL to send the callback to. Defaults to current controller / actionNodeMove which
+    * can be provided by \slatiusa\nestable\nestableNodeMoveAction by registering that as an action in the
+    * controller rendering the Widget.
+    * ```
+    * public function actions() {
+    *    return [
+    *        'nodeMove' => [
+    *            'class' => 'slatiusa\nestable\NestableNodeMoveAction',
+    *        ],
+    *    ];
+    * }
+    * ```
+    * Defaults to [current controller/nodeMove] if not set.
+    */
+    public $url;
+
+    /**
+    * @var ActiveQuery that holds the data for the tree to show.
+    */
+    public $query;
+
+    /**
+    * @var array options to be used with the model on list preparation. Supporten properties:
+    * - name: {string|function}, attribute name for the item title or unnamed function($model) that returns a
+    *         string for each item.
+    */
+    public $modelOptions = [];
 
 	/**
 	 * Initializes the widget
 	 */
 	public function init() {
+        if (null != $this->url) {
+            $this->pluginOptions['url'] = $this->url;
+        } else {
+            $this->pluginOptions['url'] = Url::to([$this->view->context->id.'/nodeMove']);
+        }
+
 		parent::init();
-		Html::addCssClass($this->options, 'dd');
 		$this->registerAssets();
+
+        Html::addCssClass($this->options, 'dd');
 		echo Html::beginTag('div', $this->options);
+
+        if (null != $this->query) {
+            $this->items = $this->prepareItems($this->query);
+        }
 		if (count($this->items) === 0) {
 			echo Html::tag('div', '', ['class' => 'dd-empty']);
 		}
@@ -137,26 +177,23 @@ class Nestable extends \kartik\base\Widget {
 		return $this->render($partial, $arguments);
 	}
 
-	/**
-	 * @param $activeQuery \yii\db\ActiveQuery
-	 * @return array
-	 */
-	public static function prepareItems($activeQuery, $partial = NULL, $renderer = NULL) {
-		$items = [];
-		foreach ($activeQuery->all() as $item) {
-			if ($partial != NULL) {
-				$content = $renderer->render($partial, ['item' => $item]);
-			} else {
-				$content = $item->name;
-			}
-			$childrenItems = static::prepareItems($item->getChildren(), $partial, $renderer);
-
-			$items[] = [
-				'content' => $content,
-				'options' => ['class' => 'dd-item dd3-item', 'data-id' => $item->id],
-				'children' => static::prepareItems($item->getChildren(), $partial, $renderer)
-			];
-		}
-		return $items;
-	}
+    /**
+    * put your comment there...
+    *
+    * @param $activeQuery \yii\db\ActiveQuery
+    * @return array
+    */
+    private function prepareItems($activeQuery)
+    {
+        $items = [];
+        foreach ($activeQuery->all() as $model) {
+            $name = ArrayHelper::getValue($this->modelOptions, 'name', 'name');
+            $items[] = [
+                'id'       => $model->getPrimaryKey(),
+                'content'  => (is_callable($name) ? call_user_func($name, $model) : $model->{$name}),
+                'children' => $this->prepareItems($model->children(1)),
+            ];
+        }
+        return $items;
+    }
 }
